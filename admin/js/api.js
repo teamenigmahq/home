@@ -1,4 +1,4 @@
-const baseUrl = 'http://enigma-demoserver.herokuapp.com/api/';
+const baseUrl = 'https://enigma-demoserver.herokuapp.com/api/';
 const source = 1;
 
 // REPORTS

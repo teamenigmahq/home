@@ -155,7 +155,7 @@
                                     <div class="col-3 fw-bold mb-2">Description</div>
                                     <div class="col-9" x-text="investigation?.description"></div>
                                     <div class="col-3 fw-bold mb-2">Comments</div>
-                                    <div class="col-9" x-text="investigation?.comment"></div>
+                                    <div class="col-9 mb-2" x-html="investigation?.comment.replace('\n', '</br>')"></div>
                                     <div class="col-3 fw-bold mb-2">Assignee</div>
                                     <div class="col-9">A.N. Official (PPRA Representative)</div>
                                     <div class="col-3 fw-bold mb-2">Started At</div>
@@ -170,10 +170,10 @@
                                 <div class="px-4 pb-4">
                                     <button class="btn btn-outline-success"
                                         x-on:click="await commenceInvestigation(investigation.id)"
-                                        x-bind:disabled="investigation.status > 0">Commence</button>
+                                        x-bind:disabled="investigation?.status > 0">Commence</button>
                                     <button class="btn btn-outline-danger"
                                         x-on:click="await concludeInvestigation(investigation.id)"
-                                        x-bind:disabled="investigation.status > 1">Conclude</button>
+                                        x-bind:disabled="investigation?.status != 1">Conclude</button>
                                 </div>
                             </div>
 
