@@ -329,10 +329,10 @@
 													</template>
 												</td>
 												<td class="d-none d-xl-table-cell">
-													<a href="#" class="btn btn-light">View</a>
-													<button class="btn btn-outline-success"
+													<a x-bind:href="`investigation-details.html?id=${investigation.id}`" class="btn btn-light">View</a>
+													<button class="btn btn-outline-success" x-on:click="await commenceInvestigation(investigation.id)"
 														x-bind:disabled="investigation.status > 0">Commence</button>
-													<button class="btn btn-outline-danger"
+													<button class="btn btn-outline-danger" x-on:click="await concludeInvestigation(investigation.id)"
 														x-bind:disabled="investigation.status > 1">Conclude</button>
 												</td>
 											</tr>

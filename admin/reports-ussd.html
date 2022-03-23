@@ -182,12 +182,12 @@
 													</template>
 												</td>
 												<td class="d-none d-xl-table-cell">
-													<a href="#" class="btn btn-light">View</a>
-													<button class="btn btn-outline-success"
-														x-bind:disabled="report.status > 0">Approve</button>
-													<button class="btn btn-outline-danger"
-														x-bind:disabled="report.status > 0">Reject</button>
-												</td>
+                                                    <a x-bind:href="`report-details.html?id=${report.id}`" class="btn btn-light">View</a>
+                                                    <button class="btn btn-outline-success" x-bind:disabled="report.status > 0"
+														x-on:click="await approveReport(report.id)">Approve</button>
+													<button class="btn btn-outline-danger" x-bind:disabled="report.status > 0"
+														x-on:click="await dismissReport(report.id)">Reject</button>
+                                                </td>
 											</tr>
 										</template>
 									</tbody>

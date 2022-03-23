@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link rel="shortcut icon" href="img/icons/icon-48x48.png" />
+    <link rel="shortcut icon" href="img/icons/icon  8x48.png" />
 
     <title>Enigma Admin Dashboard</title>
 
@@ -120,79 +120,58 @@
             <main class="content">
                 <div class="container-fluid p-0">
 
-                    <h1 class="h3 mb-3">Investigations</h1>
+                    <h1 class="h3 mb-3">Report Details</h1>
 
-                    <div class="row">
+                    <div class="row" x-data="{ report: null }"
+                        x-init="report = await getReport(parseInt((new URLSearchParams(window.location.search)).get('id')))">
                         <div class="col-12 ">
-                            <div class="card p-2">
+                            <div class="card p-2" x-show="report">
                                 <div class="card-header">
-                                    <h5 class="card-title">Investigations</h5>
-                                    <h6 class="card-subtitle text-muted">
-                                        List of all occurrences investigated by the team.
-                                    </h6>
+                                    <h5 class="card-title">Report Details</h5>
+                                    <h6 class="card-subtitle text-muted"
+                                        x-text="`Details of the report on ${report?.subject}`"></h6>
                                 </div>
-                                <table class="table table-borderless table-hover my-0">
-                                    <thead>
-                                        <tr>
-                                            <th>Company</th>
-                                            <th>Subject</th>
-                                            <th>Assignee</th>
-                                            <th>Status</th>
-                                            <th>Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody x-data="{ investigations: [] }"
-                                        x-init="investigations = await getInvestigations()">
-                                        <template x-for="investigation in investigations">
-                                            <tr>
-                                                <td>
-                                                    <div class="d-flex">
-                                                        <div class="flex-shrink-0">
-                                                            <div class="bg-light rounded-2">
-                                                                <img class="p-2" src="img/icons/brand-1.svg">
-                                                            </div>
-                                                        </div>
-                                                        <div class="flex-grow-1 ms-3">
-                                                            <strong x-text="investigation.organization"></strong>
-                                                            <div class="text-muted"
-                                                                x-text="investigation.organizationType">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td class="d-none d-xl-table-cell">
-                                                    <strong x-text="investigation.subject"></strong>
-                                                    <div class="text-muted" x-text="investigation.subjectPosition">
-                                                    </div>
-                                                </td>
-                                                <td class="d-none d-xl-table-cell">
-                                                    <strong>A. N. Other</strong>
-                                                    <div class="text-muted">
-                                                        PPRA Representative
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <template x-if="investigation.status === 0">
-                                                        <p>Pending</p>
-                                                    </template>
-                                                    <template x-if="investigation.status === 1">
-                                                        <p>Ongoing</p>
-                                                    </template>
-                                                    <template x-if="investigation.status === 2">
-                                                        <p>Complete</p>
-                                                    </template>
-                                                </td>
-                                                <td class="d-none d-xl-table-cell">
-                                                    <a x-bind:href="`investigation-details.html?id=${investigation.id}`" class="btn btn-light">View</a>
-													<button class="btn btn-outline-success" x-on:click="await commenceInvestigation(investigation.id)"
-														x-bind:disabled="investigation.status > 0">Commence</button>
-													<button class="btn btn-outline-danger" x-on:click="await concludeInvestigation(investigation.id)"
-														x-bind:disabled="investigation.status > 1">Conclude</button>
-                                                </td>
-                                            </tr>
+                                <div class="row p-4 lead mb-2">
+                                    <div class="col-3 fw-bold mb-2">Subject</div>
+                                    <div class="col-9" x-text="report?.subject"></div>
+                                    <div class="col-3 fw-bold mb-2">Position</div>
+                                    <div class="col-9" x-text="report?.subjectPosition"></div>
+                                    <div class="col-3 fw-bold mb-2">Organization</div>
+                                    <div class="col-9" x-text="report?.organization"></div>
+                                    <div class="col-3 fw-bold mb-2">Organization Type</div>
+                                    <div class="col-9" x-text="report?.organizationType"></div>
+                                    <div class="col-3 fw-bold mb-2">Status</div>
+                                    <div class="col-9">
+                                        <template x-if="report?.status === 0">
+                                            <p class="mb-0">Pending</p>
                                         </template>
-                                    </tbody>
-                                </table>
+                                        <template x-if="report?.status === 1">
+                                            <p class="mb-0">Approved</p>
+                                        </template>
+                                        <template x-if="report?.status === 2">
+                                            <p class="mb-0">Dismissed</p>
+                                        </template>
+                                    </div>
+                                    <div class="col-3 fw-bold mb-2">Description</div>
+                                    <div class="col-9" x-text="report?.description"></div>
+                                    <div class="col-3 fw-bold mb-2">Comments</div>
+                                    <div class="col-9" x-text="report?.comment"></div>
+                                    <div class="col-3 fw-bold mb-2">Reported At</div>
+                                    <div class="col-9" x-text="new Date(report?.reportedAt)"></div>
+                                </div>
+                                <div class="px-4 pb-4">
+                                    <button class="btn btn-outline-success" x-bind:disabled="report?.status > 0"
+                                        x-on:click="await approveReport(report.id)">Approve</button>
+                                    <button class="btn btn-outline-danger" x-bind:disabled="report?.status > 0"
+                                        x-on:click="await dismissReport(report.id)">Reject</button>
+                                </div>
+                            </div>
+
+                            <div x-bind:class="report ? 'd-none' : ''" class="d-flex align-items-center">
+                                <div class="spinner-border spinner-border me-2" role="status">
+                                    <span class="visually-hidden">Loading...</span>
+                                </div>
+                                <p class="lead fs-3 mb-0">Loading...</p>
                             </div>
                         </div>
                     </div>
@@ -203,7 +182,6 @@
             <footer class="footer" x-data x-html="(await axios.get('partials/footer.html')).data"></footer>
         </div>
     </div>
-
 
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://unpkg.com/alpinejs" defer></script>
