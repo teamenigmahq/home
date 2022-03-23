@@ -22,101 +22,7 @@
 
 <body data-theme="default" data-layout="fluid" data-sidebar-position="left" data-sidebar-layout="default">
 	<div class="wrapper">
-		<nav id="sidebar" class="sidebar js-sidebar">
-			<div class="sidebar-content js-simplebar">
-				<a class="sidebar-brand" href="index.html">
-					<span class="sidebar-brand-text align-middle">
-						Enigma
-						<small class="badge bg-primary text-uppercase">Admin</small>
-					</span>
-					<svg class="sidebar-brand-icon align-middle" width="32px" height="32px" viewBox="0 0 24 24"
-						fill="none" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"
-						color="#FFFFFF" style="margin-left: -3px">
-						<path d="M12 4L20 8.00004L12 12L4 8.00004L12 4Z"></path>
-						<path d="M20 12L12 16L4 12"></path>
-						<path d="M20 16L12 20L4 16"></path>
-					</svg>
-				</a>
-
-				<div class="sidebar-user">
-					<div class="d-flex justify-content-center">
-						<div class="flex-shrink-0">
-							<img src="img/avatars/avatar.jpg" class="avatar img-fluid rounded me-1"
-								alt="A. N. Official" />
-						</div>
-						<div class="flex-grow-1 ps-2">
-							<a class="sidebar-user-title dropdown-toggle" href="#" data-bs-toggle="dropdown">
-								A. N. Official
-							</a>
-							<div class="dropdown-menu dropdown-menu-start">
-								<a class="dropdown-item" href="pages-profile.html"><i class="align-middle me-1"
-										data-feather="user"></i> Profile</a>
-								<a class="dropdown-item" href="#"><i class="align-middle me-1"
-										data-feather="pie-chart"></i> Analytics</a>
-								<div class="dropdown-divider"></div>
-								<a class="dropdown-item" href="pages-settings.html"><i class="align-middle me-1"
-										data-feather="settings"></i> Settings &
-									Privacy</a>
-								<a class="dropdown-item" href="#"><i class="align-middle me-1"
-										data-feather="help-circle"></i> Help Center</a>
-								<div class="dropdown-divider"></div>
-								<a class="dropdown-item" href="#">Log out</a>
-							</div>
-
-							<div class="sidebar-user-subtitle">EACC Representative</div>
-						</div>
-					</div>
-				</div>
-
-				<ul class="sidebar-nav">
-					<li class="sidebar-header">
-						Pages
-					</li>
-
-					<li class="sidebar-item">
-						<a class="sidebar-link" href="index.html">
-							<i class="align-middle" data-feather="user"></i> <span class="align-middle">Dashboard</span>
-						</a>
-					</li>
-
-					<li class="sidebar-item">
-						<a data-bs-target="#pages" data-bs-toggle="collapse" class="sidebar-link collapsed">
-							<i class="align-middle" data-feather="layout"></i> <span class="align-middle">Reports</span>
-						</a>
-						<ul id="pages" class="sidebar-dropdown list-unstyled collapse " data-bs-parent="#sidebar">
-							<li class="sidebar-item">
-								<a class="sidebar-link" href="reports-user.html">User Reports</a>
-							</li>
-							<li class="sidebar-item">
-								<a class="sidebar-link" href="reports-ussd.html">USSD Reports</a>
-							</li>
-							<li class="sidebar-item">
-								<a class="sidebar-link" href="reports-ml.html">ML Reports</a>
-							</li>
-						</ul>
-					</li>
-
-					<li class="sidebar-item">
-						<a class="sidebar-link" href="index.html">
-							<i class="align-middle" data-feather="credit-card"></i> <span
-								class="align-middle">Investigations</span>
-						</a>
-					</li>
-				</ul>
-
-				<div class="sidebar-cta">
-					<div class="sidebar-cta-content">
-						<strong class="d-inline-block mb-2">Weekly Fraud Report</strong>
-						<div class="mb-3 text-sm">
-							Your weekly fraud report is ready for download!
-						</div>
-
-						<div class="d-grid">
-							<a href="#" class="btn btn-outline-primary" target="_blank">Download</a>
-						</div>
-					</div>
-				</div>
-			</div>
+		<nav id="sidebar" class="sidebar js-sidebar" x-data x-html="(await axios.get('partials/sidebar.html')).data">
 		</nav>
 
 		<div class="main">
@@ -354,7 +260,7 @@
 
 					<div class="row">
 						<div class="col-12 col-lg-8 col-xxl-9 d-flex">
-							<div class="card flex-fill">
+							<div class="card flex-fill p-2">
 								<div class="card-header">
 									<div class="card-actions float-end">
 										<div class="dropdown position-relative">
@@ -381,52 +287,56 @@
 											<th>Action</th>
 										</tr>
 									</thead>
-									<tbody x-data="{ investigations: [] }" x-init="investigations = await getInvestigations()">
+									<tbody x-data="{ investigations: [] }"
+										x-init="investigations = await getInvestigations()">
 										<template x-for="investigation in investigations">
-										<tr>
-											<td>
-												<div class="d-flex">
-													<div class="flex-shrink-0">
-														<div class="bg-light rounded-2">
-															<img class="p-2" src="img/icons/brand-1.svg">
+											<tr>
+												<td>
+													<div class="d-flex">
+														<div class="flex-shrink-0">
+															<div class="bg-light rounded-2">
+																<img class="p-2" src="img/icons/brand-1.svg">
+															</div>
+														</div>
+														<div class="flex-grow-1 ms-3">
+															<strong x-text="investigation.organization"></strong>
+															<div class="text-muted"
+																x-text="investigation.organizationType">
+															</div>
 														</div>
 													</div>
-													<div class="flex-grow-1 ms-3">
-														<strong x-text="investigation.organization"></strong>
-														<div class="text-muted" x-text="investigation.organizationType">
-														</div>
+												</td>
+												<td class="d-none d-xl-table-cell">
+													<strong x-text="investigation.subject"></strong>
+													<div class="text-muted" x-text="investigation.subjectPosition">
 													</div>
-												</div>
-											</td>
-											<td class="d-none d-xl-table-cell">
-												<strong x-text="investigation.subject"></strong>
-												<div class="text-muted" x-text="investigation.subjectPosition">
-												</div>
-											</td>
-											<td class="d-none d-xl-table-cell">
-												<strong>A. N. Other</strong>
-												<div class="text-muted">
-													PPRA Representative
-												</div>
-											</td>
-											<td>
-												<template x-if="investigation.status === 0">
-													<p>Pending</p>
-												</template>
-												<template x-if="investigation.status === 1">
-													<p>Ongoing</p>
-												</template>
-												<template x-if="investigation.status === 2">
-													<p>Complete</p>
-												</template>	
-											</td>
-											<td class="d-none d-xl-table-cell">
-												<a href="#" class="btn btn-light">View</a>
-												<button class="btn btn-outline-success" x-bind:disabled="investigation.status > 0">Commence</button>
-												<button class="btn btn-outline-danger" x-bind:disabled="investigation.status > 1">Conclude</button>
-											</td>
-										</tr>
-									</template>
+												</td>
+												<td class="d-none d-xl-table-cell">
+													<strong>A. N. Other</strong>
+													<div class="text-muted">
+														PPRA Representative
+													</div>
+												</td>
+												<td>
+													<template x-if="investigation.status === 0">
+														<p>Pending</p>
+													</template>
+													<template x-if="investigation.status === 1">
+														<p>Ongoing</p>
+													</template>
+													<template x-if="investigation.status === 2">
+														<p>Complete</p>
+													</template>
+												</td>
+												<td class="d-none d-xl-table-cell">
+													<a href="#" class="btn btn-light">View</a>
+													<button class="btn btn-outline-success"
+														x-bind:disabled="investigation.status > 0">Commence</button>
+													<button class="btn btn-outline-danger"
+														x-bind:disabled="investigation.status > 1">Conclude</button>
+												</td>
+											</tr>
+										</template>
 									</tbody>
 								</table>
 							</div>
