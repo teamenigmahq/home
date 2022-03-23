@@ -63,7 +63,7 @@
 								<a class="dropdown-item" href="#">Log out</a>
 							</div>
 
-							<div class="sidebar-user-subtitle">PPRA Representative</div>
+							<div class="sidebar-user-subtitle">EACC Representative</div>
 						</div>
 					</div>
 				</div>
@@ -488,33 +488,7 @@
 				</div>
 			</main>
 
-			<footer class="footer">
-				<div class="container-fluid">
-					<div class="row text-muted">
-						<div class="col-6 text-start">
-							<p class="mb-0">
-								<a href="#" target="_blank" class="text-muted"><strong>Enigma</strong></a> &copy;
-							</p>
-						</div>
-						<div class="col-6 text-end">
-							<ul class="list-inline">
-								<li class="list-inline-item">
-									<a class="text-muted" href="#">Support</a>
-								</li>
-								<li class="list-inline-item">
-									<a class="text-muted" href="#">Help Center</a>
-								</li>
-								<li class="list-inline-item">
-									<a class="text-muted" href="#">Privacy</a>
-								</li>
-								<li class="list-inline-item">
-									<a class="text-muted" href="#">Terms</a>
-								</li>
-							</ul>
-						</div>
-					</div>
-				</div>
-			</footer>
+			<footer class="footer" x-data x-html="(await axios.get('partials/footer.html')).data"></footer>
 		</div>
 	</div>
 	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
@@ -623,18 +597,6 @@
 					},
 					cutoutPercentage: 70
 				}
-			});
-		});
-	</script>
-	<script>
-		document.addEventListener("DOMContentLoaded", function () {
-			var date = new Date(Date.now() - 5 * 24 * 60 * 60 * 1000);
-			var defaultDate = date.getUTCFullYear() + "-" + (date.getUTCMonth() + 1) + "-" + date.getUTCDate();
-			document.getElementById("datetimepicker-dashboard").flatpickr({
-				inline: true,
-				prevArrow: "<span class=\"fas fa-chevron-left\" title=\"Previous month\"></span>",
-				nextArrow: "<span class=\"fas fa-chevron-right\" title=\"Next month\"></span>",
-				defaultDate: defaultDate
 			});
 		});
 	</script>
