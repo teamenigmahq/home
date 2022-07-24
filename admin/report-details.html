@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link rel="shortcut icon" href="img/icons/icon  8x48.png" />
+    <link rel="shortcut icon" href="img/icons/icon  8x48.png"/>
 
     <title>Enigma Admin Dashboard</title>
 
@@ -20,173 +20,196 @@
 </head>
 
 <body data-theme="default" data-layout="fluid" data-sidebar-position="left" data-sidebar-layout="default">
-    <div class="wrapper">
-        <nav id="sidebar" class="sidebar js-sidebar" x-data x-html="(await axios.get('partials/sidebar.html')).data">
-        </nav>
+<div class="wrapper">
+    <nav id="sidebar" class="sidebar js-sidebar" x-data x-html="(await axios.get('partials/sidebar.html')).data">
+    </nav>
 
-        <div class="main">
-            <nav class="navbar navbar-expand navbar-light navbar-bg">
-                <a class="sidebar-toggle js-sidebar-toggle">
-                    <i class="hamburger align-self-center"></i>
-                </a>
+    <div class="main">
+        <nav class="navbar navbar-expand navbar-light navbar-bg">
+            <a class="sidebar-toggle js-sidebar-toggle">
+                <i class="hamburger align-self-center"></i>
+            </a>
 
-                <form class="d-none d-sm-inline-block">
-                    <div class="input-group input-group-navbar">
-                        <input type="text" class="form-control" placeholder="Search…" aria-label="Search">
-                        <button class="btn" type="button">
-                            <i class="align-middle" data-feather="search"></i>
-                        </button>
-                    </div>
-                </form>
-
-                <div class="navbar-collapse collapse">
-                    <ul class="navbar-nav navbar-align">
-                        <li class="nav-item dropdown" x-data="{ notifications: [] }"
-                            x-init="notifications = await getNotifications()">
-                            <a class="nav-icon dropdown-toggle" href="#" id="alertsDropdown" data-bs-toggle="dropdown">
-                                <div class="position-relative">
-                                    <i class="align-middle" data-feather="bell"></i>
-                                    <span class="indicator" x-text="notifications.length"></span>
-                                </div>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end py-0"
-                                aria-labelledby="alertsDropdown">
-                                <div class="dropdown-menu-header" x-text="`${notifications.length} New Notifications`">
-                                </div>
-                                <div class="list-group">
-
-                                    <template x-for="notification in notifications">
-                                        <a href="#" class="list-group-item">
-                                            <div class="row g-0 align-items-center">
-                                                <div class="col-2">
-                                                    <template x-if="notification.severity === 0">
-                                                        <i class="text-info bi bi-info-circle"></i>
-                                                    </template>
-                                                    <template x-if="notification.severity === 1">
-                                                        <i class="text-success bi bi-check-circle"></i>
-                                                    </template>
-                                                    <template x-if="notification.severity === 2">
-                                                        <i class="text-warning bi bi-exclamation-triangle"></i>
-                                                    </template>
-                                                    <template x-if="notification.severity === 3">
-                                                        <i class="text-danger bi bi-exclamation-circle"></i>
-                                                    </template>
-                                                </div>
-                                                <div class="col-10">
-                                                    <div class="text-dark" x-text="notification.title"></div>
-                                                    <div class="text-muted small mt-1" x-text="notification.text"></div>
-                                                    <div class="text-muted small mt-1">30m ago</div>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </template>
-                                </div>
-                                <div class="dropdown-menu-footer">
-                                    <a href="#" class="text-muted">Show all notifications</a>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-icon js-fullscreen d-none d-lg-block" href="#">
-                                <div class="position-relative">
-                                    <i class="align-middle" data-feather="maximize"></i>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-icon pe-md-0 dropdown-toggle" href="#" data-bs-toggle="dropdown">
-                                <img src="img/avatars/avatar.jpg" class="avatar img-fluid rounded" alt="Charles Hall" />
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-end">
-                                <a class="dropdown-item" href="pages-profile.html"><i class="align-middle me-1"
-                                        data-feather="user"></i> Profile</a>
-                                <a class="dropdown-item" href="#"><i class="align-middle me-1"
-                                        data-feather="pie-chart"></i> Analytics</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="pages-settings.html"><i class="align-middle me-1"
-                                        data-feather="settings"></i> Settings &
-                                    Privacy</a>
-                                <a class="dropdown-item" href="#"><i class="align-middle me-1"
-                                        data-feather="help-circle"></i> Help Center</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">Log out</a>
-                            </div>
-                        </li>
-                    </ul>
+            <form class="d-none d-sm-inline-block">
+                <div class="input-group input-group-navbar">
+                    <input type="text" class="form-control" placeholder="Search…" aria-label="Search">
+                    <button class="btn" type="button">
+                        <i class="align-middle" data-feather="search"></i>
+                    </button>
                 </div>
-            </nav>
+            </form>
 
-
-            <main class="content">
-                <div class="container-fluid p-0">
-
-                    <h1 class="h3 mb-3">Report Details</h1>
-
-                    <div class="row" x-data="{ report: null }"
-                        x-init="report = await getReport(parseInt((new URLSearchParams(window.location.search)).get('id')))">
-                        <div class="col-12 ">
-                            <div class="card p-2" x-show="report">
-                                <div class="card-header">
-                                    <h5 class="card-title">Report Details</h5>
-                                    <h6 class="card-subtitle text-muted"
-                                        x-text="`Details of the report on ${report?.subject}`"></h6>
-                                </div>
-                                <div class="row p-4 lead mb-2">
-                                    <div class="col-3 fw-bold mb-2">Subject</div>
-                                    <div class="col-9" x-text="report?.subject"></div>
-                                    <div class="col-3 fw-bold mb-2">Position</div>
-                                    <div class="col-9" x-text="report?.subjectPosition"></div>
-                                    <div class="col-3 fw-bold mb-2">Organization</div>
-                                    <div class="col-9" x-text="report?.organization"></div>
-                                    <div class="col-3 fw-bold mb-2">Organization Type</div>
-                                    <div class="col-9" x-text="report?.organizationType"></div>
-                                    <div class="col-3 fw-bold mb-2">Status</div>
-                                    <div class="col-9">
-                                        <template x-if="report?.status === 0">
-                                            <p class="mb-0">Pending</p>
-                                        </template>
-                                        <template x-if="report?.status === 1">
-                                            <p class="mb-0">Approved</p>
-                                        </template>
-                                        <template x-if="report?.status === 2">
-                                            <p class="mb-0">Dismissed</p>
-                                        </template>
-                                    </div>
-                                    <div class="col-3 fw-bold mb-2">Description</div>
-                                    <div class="col-9" x-text="report?.description"></div>
-                                    <div class="col-3 fw-bold mb-2">Comments</div>
-                                    <div class="col-9" x-text="report?.comment"></div>
-                                    <div class="col-3 fw-bold mb-2">Reported At</div>
-                                    <div class="col-9" x-text="new Date(report?.reportedAt)"></div>
-                                </div>
-                                <div class="px-4 pb-4">
-                                    <button class="btn btn-outline-success" x-bind:disabled="report?.status > 0"
-                                        x-on:click="await approveReport(report.id)">Approve</button>
-                                    <button class="btn btn-outline-danger" x-bind:disabled="report?.status > 0"
-                                        x-on:click="await dismissReport(report.id)">Reject</button>
-                                </div>
+            <div class="navbar-collapse collapse">
+                <ul class="navbar-nav navbar-align">
+                    <li class="nav-item dropdown" x-data="{ notifications: [] }"
+                        x-init="notifications = await getNotifications()">
+                        <a class="nav-icon dropdown-toggle" href="#" id="alertsDropdown" data-bs-toggle="dropdown">
+                            <div class="position-relative">
+                                <i class="align-middle" data-feather="bell"></i>
+                                <span class="indicator" x-text="notifications.length"></span>
                             </div>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end py-0"
+                             aria-labelledby="alertsDropdown">
+                            <div class="dropdown-menu-header" x-text="`${notifications.length} New Notifications`">
+                            </div>
+                            <div class="list-group">
 
-                            <div x-bind:class="report ? 'd-none' : ''" class="d-flex align-items-center">
-                                <div class="spinner-border spinner-border me-2" role="status">
-                                    <span class="visually-hidden">Loading...</span>
-                                </div>
-                                <p class="lead fs-3 mb-0">Loading...</p>
+                                <template x-for="notification in notifications">
+                                    <a href="#" class="list-group-item">
+                                        <div class="row g-0 align-items-center">
+                                            <div class="col-2">
+                                                <template x-if="notification.severity === 0">
+                                                    <i class="text-info bi bi-info-circle"></i>
+                                                </template>
+                                                <template x-if="notification.severity === 1">
+                                                    <i class="text-success bi bi-check-circle"></i>
+                                                </template>
+                                                <template x-if="notification.severity === 2">
+                                                    <i class="text-warning bi bi-exclamation-triangle"></i>
+                                                </template>
+                                                <template x-if="notification.severity === 3">
+                                                    <i class="text-danger bi bi-exclamation-circle"></i>
+                                                </template>
+                                            </div>
+                                            <div class="col-10">
+                                                <div class="text-dark" x-text="notification.title"></div>
+                                                <div class="text-muted small mt-1" x-text="notification.text"></div>
+                                                <div class="text-muted small mt-1">30m ago</div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </template>
+                            </div>
+                            <div class="dropdown-menu-footer">
+                                <a href="#" class="text-muted">Show all notifications</a>
                             </div>
                         </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-icon js-fullscreen d-none d-lg-block" href="#">
+                            <div class="position-relative">
+                                <i class="align-middle" data-feather="maximize"></i>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-icon pe-md-0 dropdown-toggle" href="#" data-bs-toggle="dropdown">
+                            <img src="img/avatars/avatar.jpg" class="avatar img-fluid rounded" alt="Charles Hall"/>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end">
+                            <a class="dropdown-item" href="pages-profile.html"><i class="align-middle me-1"
+                                                                                  data-feather="user"></i> Profile</a>
+                            <a class="dropdown-item" href="#"><i class="align-middle me-1"
+                                                                 data-feather="pie-chart"></i> Analytics</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="pages-settings.html"><i class="align-middle me-1"
+                                                                                   data-feather="settings"></i> Settings
+                                &
+                                Privacy</a>
+                            <a class="dropdown-item" href="#"><i class="align-middle me-1"
+                                                                 data-feather="help-circle"></i> Help Center</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">Log out</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+
+        <main class="content">
+            <div class="container-fluid p-0">
+
+                <h1 class="h3 mb-3">Report Details</h1>
+
+                <div class="row" x-data="{ report: null }"
+                     x-init="report = await getReport(parseInt((new URLSearchParams(window.location.search)).get('id')))">
+                    <div class="col-12 ">
+                        <div class="card p-2 mb-4" x-show="report">
+                            <div class="card-header">
+                                <h5 class="card-title">Report Details</h5>
+                                <h6 class="card-subtitle text-muted"
+                                    x-text="`Details of the report on ${report?.subject}`"></h6>
+                            </div>
+                            <div class="row p-4 lead mb-2">
+                                <div class="col-3 fw-bold mb-2">Subject</div>
+                                <div class="col-9" x-text="report?.subject"></div>
+                                <div class="col-3 fw-bold mb-2">Position</div>
+                                <div class="col-9" x-text="report?.subjectPosition"></div>
+                                <div class="col-3 fw-bold mb-2">Organization</div>
+                                <div class="col-9" x-text="report?.organization"></div>
+                                <div class="col-3 fw-bold mb-2">Organization Type</div>
+                                <div class="col-9" x-text="report?.organizationType"></div>
+                                <div class="col-3 fw-bold mb-2">Status</div>
+                                <div class="col-9">
+                                    <template x-if="report?.status === 0">
+                                        <p class="mb-0">Pending</p>
+                                    </template>
+                                    <template x-if="report?.status === 1">
+                                        <p class="mb-0">Approved</p>
+                                    </template>
+                                    <template x-if="report?.status === 2">
+                                        <p class="mb-0">Dismissed</p>
+                                    </template>
+                                </div>
+                                <div class="col-3 fw-bold mb-2">Description</div>
+                                <div class="col-9" x-text="report?.description"></div>
+                                <div class="col-3 fw-bold mb-2">Comments</div>
+                                <div class="col-9" x-text="report?.comment"></div>
+                                <div class="col-3 fw-bold mb-2">Reported At</div>
+                                <div class="col-9" x-text="new Date(report?.reportedAt)"></div>
+                            </div>
+                            <div class="px-4 pb-4">
+                                <button class="btn btn-outline-success" x-bind:disabled="report?.status > 0"
+                                        x-on:click="await approveReport(report.id)">Approve
+                                </button>
+                                <button class="btn btn-outline-danger" x-bind:disabled="report?.status > 0"
+                                        x-on:click="await dismissReport(report.id)">Reject
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="card p-2 mb-4" x-show="report">
+                            <div class="card-header">
+                                <h5 class="card-title">Supporting Documents</h5>
+                                <h6 class="card-subtitle text-muted"
+                                    x-text="`Documents provided for report on ${report?.subject}`"></h6>
+                            </div>
+                            <div class="row p-4 lead">
+                                <ul class="list-group list-group-flush">
+                                    <template x-for="document in report.documents">
+                                        <li class="list-group-item">
+                                            <a x-bind:href="document.path">
+                                                <i class="bi bi-file-earmark text-primary"></i>
+                                                <span x-text="`${Date.parse(document.uploadedAt)}.${document.mimeType.split('/')[1]}`"></span>
+                                            </a>
+                                        </li>
+                                    </template>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div x-bind:class="report ? 'd-none' : ''" class="d-flex align-items-center">
+                            <div class="spinner-border spinner-border me-2" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                            <p class="lead fs-3 mb-0">Loading...</p>
+                        </div>
                     </div>
-
                 </div>
-            </main>
 
-            <footer class="footer" x-data x-html="(await axios.get('partials/footer.html')).data"></footer>
-        </div>
+            </div>
+        </main>
+
+        <footer class="footer" x-data x-html="(await axios.get('partials/footer.html')).data"></footer>
     </div>
+</div>
 
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src="https://unpkg.com/alpinejs" defer></script>
-    <script src="js/app.js"></script>
-    <script src="js/api.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="https://unpkg.com/alpinejs" defer></script>
+<script src="js/app.js"></script>
+<script src="js/api.js"></script>
 
 </body>
 

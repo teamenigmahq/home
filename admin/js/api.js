@@ -1,3 +1,4 @@
+// const baseUrl = "https://localhost:7162/api/";
 const baseUrl = 'https://enigma-demoserver.herokuapp.com/api/';
 const source = 1;
 
@@ -63,6 +64,14 @@ async function createInvestigation(investigation) {
 // NOTIFICATIONS
 
 async function getNotifications() {
-    let { data } = await axios.get(`${baseUrl}notifications`); 
-    return data;   
+    /** @var {Array} data */
+    let { data } = await axios.get(`${baseUrl}notifications`);
+
+    function compare( a, b ) {
+        if ( a.id > b.id ) return -1;
+        if ( a.id < b.id ) return 1;
+        return 0;
+    }
+
+    return data.sort( compare ).slice(0, 3);
 }
