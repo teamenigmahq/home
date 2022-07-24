@@ -383,13 +383,13 @@
         let error = false;
 
         try {
-            await axios.post(url, formData, {
+            let result = await axios.post(url, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                     'X-Enigma-Source': source
                 }
             });
-            message = "Your report has been submitted successfully!";
+            message = `Your report has been submitted successfully! Your reference number is ${result.reference}.`;
 
             subjectInput.value = "";
             organizationInput.value = "";
