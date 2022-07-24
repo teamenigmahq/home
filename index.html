@@ -360,9 +360,11 @@
     const form = document.getElementsByClassName("contact-form-l3")[0];
 
     async function submitReport(event) {
+        document.querySelector("#contact").scrollIntoView();
+        
         showFormMessage("Submitting your report...");
         event.preventDefault();
-        console.log(event);
+        
         const subject = subjectInput.value;
         const organization = organizationInput.value;
         const position = positionInput.value;
@@ -389,7 +391,7 @@
                     'X-Enigma-Source': source
                 }
             });
-            message = `Your report has been submitted successfully! Your reference number is ${result.reference}.`;
+            message = `Your report has been submitted successfully! Your reference number is ${result.data.reference}. Thank you for playing your part in the fight against corruption.`;
 
             subjectInput.value = "";
             organizationInput.value = "";
